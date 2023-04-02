@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     'boards',
     'comments',
     'timetables',
-
-
 ]
 
 MIDDLEWARE = [
