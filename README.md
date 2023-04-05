@@ -5,7 +5,7 @@
      2) accounts : 로그인, 로그아웃, 회원가입  
      3) comments : 게시글에 댓글 달기  
      4) tags : 태그 기능은 게시글을 작성할때 그글이 포함되어 있는 내용을 단어로 요약한것입니다. 게시글을 작성할때마다 개수의 제한 없이 태그를 입력받을수 있고 입력받은 값을 저장하되 기존에 겹치는 태그는 늘리지 저장이아닌 불러오는 형식으로 구현했습니다.  
-     5) timetables :시간표 만들기(강의 등록 등), 친구맺기, 과목 등록하기  
+     5) timetables :시간표 만들기(강의 등록 등), 친구맺기, 과목 등록하기  참고 링크 : https://ssungkang.tistory.com/entry/Django-10-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%EB%A1%9C%EA%B7%B8%EC%9D%B8%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
    
 ## 겪은 오류와 해결 과정  
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c3bab068-f117-4477-bacb-2d8bbb08c19c/Untitled.png)  
@@ -14,6 +14,7 @@
   2) error code 1824 : Failed to open the referenced table ‘board’ : article table을 만들려다가 오류가 났다. 이유는 데이터베이스들은 ‘관계형’이다. 따라서 생성되는 순서가 중요하다. board가 있어야 article이 존재할 수 있다. 생성 순서 중요   
   3) error code 1072 : column을 먼저 추가한 후 key 값으로 설정할 수 있음. 이거 안해서 계속 에러 뜸..    
   4) error code 1681 : mysql이 더 이상 int에 length를 정하는 것을 지원하지 않는다. 따라서 int 옆에 적어준 길이를 지정하지 않았더니 해결됐다.  
+  참고 링크 : https://nayha.tistory.com/230
   5) RuntimeError : Model class boards.models.Board doesn't declare an explicit app_label and isn't in an application in INSTALLED_APPS   
     이런 류의 에러가 자꾸만 떠서 고생을 많이 했다… ㅠ 이때는 [settings.py](http://settings.py) 나 이번 과제의 경우 [base.py](http://base.py) 에 들어가면서 INSTALLED_APPS 에 내가 빠뜨린 앱이 없는지 살펴보면 된다.  
   6) page not found 오류 : runserver를 했지만 페이지가 안떴다. 이 때 path('',home)을 해주니 로그인 해주세요! 라는 문구가 뜨면서 해결이 됐다.  
@@ -22,6 +23,10 @@
   1) .env 파일은 보안을 유지하기 위해 설정하는 파일로 dev.py를 바꾸면 안된다고 한다…  
   2) 자동증가 : 스키마를 작성하다보면 데이터의 수를 p.k로 설정해야 할때가 있다. 이럴경우 새로 데이터를 insert할때마다 max(num)으로 기존에 추가되어있는 num의 최대값을 알아야 p.k값이 겹치지 않게 추가를 할 수있다. 하지만 *insert마다 이렇게 num의 최대값을 받아오는 sql문을 작성하는것은 비효율적*이므로 num에 Auto_Increment 속성으로 insert문을 보낼때 마다 자동으로 num값이 증가되게 저장할 수 있다.  
   3) ERD 추출하기 : MySQL 이 알아서 추출해준다 !_! 완전 신기하다 (feat. 재령)  
+  ![Untitled](https://user-images.githubusercontent.com/90204371/230025525-69fbb8b6-e13f-42d5-8198-25e8ccbba560.png)
+그래서 다음과 같이 테이블을 형성해보았다.
+참고링크 : https://bamdule.tistory.com/44
+
   4)  
    python [manage.py](http://manage.py/) makemigrations accounts  
    python [manage.py](http://manage.py/) migrate accounts  
