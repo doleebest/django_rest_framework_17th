@@ -24,6 +24,7 @@
   2) 자동증가 : 스키마를 작성하다보면 데이터의 수를 p.k로 설정해야 할때가 있다. 이럴경우 새로 데이터를 insert할때마다 max(num)으로 기존에 추가되어있는 num의 최대값을 알아야 p.k값이 겹치지 않게 추가를 할 수있다. 하지만 *insert마다 이렇게 num의 최대값을 받아오는 sql문을 작성하는것은 비효율적*이므로 num에 Auto_Increment 속성으로 insert문을 보낼때 마다 자동으로 num값이 증가되게 저장할 수 있다.  
   3) ERD 추출하기 : MySQL 이 알아서 추출해준다 !_! 완전 신기하다 (feat. 재령)  
   ![Untitled](https://user-images.githubusercontent.com/90204371/230025525-69fbb8b6-e13f-42d5-8198-25e8ccbba560.png)
+  ![Untitled (1)](https://user-images.githubusercontent.com/90204371/230026295-dcfd4fe6-405d-4b19-bea6-9840010159b1.png)
 그래서 다음과 같이 테이블을 형성해보았다.
 참고링크 : https://bamdule.tistory.com/44
 
