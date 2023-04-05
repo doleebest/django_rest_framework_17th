@@ -16,7 +16,9 @@
   4) error code 1681 : mysql이 더 이상 int에 length를 정하는 것을 지원하지 않는다. 따라서 int 옆에 적어준 길이를 지정하지 않았더니 해결됐다.  
   참고 링크 : https://nayha.tistory.com/230
   5) RuntimeError : Model class boards.models.Board doesn't declare an explicit app_label and isn't in an application in INSTALLED_APPS   
-    이런 류의 에러가 자꾸만 떠서 고생을 많이 했다… ㅠ 이때는 [settings.py](http://settings.py) 나 이번 과제의 경우 [base.py](http://base.py) 에 들어가면서 INSTALLED_APPS 에 내가 빠뜨린 앱이 없는지 살펴보면 된다.  
+    이런 류의 에러가 자꾸만 떠서 고생을 많이 했다… ㅠ 이때는
+    ![Untitled (2)](https://user-images.githubusercontent.com/90204371/230026935-8f77d3ff-5bfb-46c2-be7a-09f10ccd2888.png)
+    [settings.py](http://settings.py) 나 이번 과제의 경우 [base.py](http://base.py) 에 들어가면서 INSTALLED_APPS 에 내가 빠뜨린 앱이 없는지 살펴보면 된다.  
   6) page not found 오류 : runserver를 했지만 페이지가 안떴다. 이 때 path('',home)을 해주니 로그인 해주세요! 라는 문구가 뜨면서 해결이 됐다.  
 
 ## 새롭게 배운 점  
