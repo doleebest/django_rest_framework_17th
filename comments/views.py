@@ -12,7 +12,7 @@ class CommentList(APIView) :
     댓글 생성
     /comment/
     """
-    def comment(self, request, format=None):
+    def post(self, request, format=None):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -20,7 +20,7 @@ class CommentList(APIView) :
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     """
-    게시물 조회
+    댓글 조회
     /comment/
     """
     def get(self,request, format=None):

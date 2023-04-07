@@ -17,7 +17,7 @@ class UserList(APIView) :
     유저 생성
     /user/
     """
-    def user(self, request, format = None):
+    def post(self, request, format = None):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

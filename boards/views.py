@@ -20,7 +20,7 @@ class BoardList(APIView):
     게시판 생성
     /board/
     """
-    def board(self, request, format=None):
+    def post(self, request, format=None):
         serializer = BoardSerializer(data=request.data)
         if serializer.is_valid() :
             serializer.save()
