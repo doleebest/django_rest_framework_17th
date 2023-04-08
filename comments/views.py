@@ -36,7 +36,7 @@ class CommentDetail(APIView) :
             raise Http404
 
     """
-    특정 게시물 조회
+    특정 댓글 조회
     /comment/{pk}/
     """
     def get(self, request, pk):
@@ -45,19 +45,20 @@ class CommentDetail(APIView) :
         return Response(serializer.data)
 
     """
-    특정 게시물 수정
-    /post/{pk}/
+    특정 댓글 수정
+    /comment/{pk}/
     """
     def put(self, request, pk, format=None):
         comments = self.get_object(pk)
-        serializer = Comment(comments, data=request.data)
+        serializer = CommentSerializer(comments, data=request.data)
         if serializer.is_valid():
+            serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     """
-    특정 게시물 삭제
-    /post/{pk}/
+    특정 댓글 삭제
+    /comment/{pk}/
     """
     def delete(self,request,pk,format=None):
         comments = self.get_object(pk)
