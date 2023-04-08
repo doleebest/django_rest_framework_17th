@@ -40,10 +40,40 @@ https://antilibrary.org/911
 ![Untitled (7)](https://user-images.githubusercontent.com/90204371/230721435-caf504c2-7748-4cc2-8eb0-b5c4d9266b57.png)
 ![Untitled (6)](https://user-images.githubusercontent.com/90204371/230721436-f9611ca7-2b87-41a3-9101-0ed69cb48c9e.png)
 
-## 회고
-하면 할 수록 백엔드 flow에 대한 이해도가 높아지는 것 같아서 뿌듯하다. 그리고 회고 쓰는 skill도 향상된 것 같다. 좀 더 가독성있게 쓸 수 있게 되었다.
+# viewset & filterset
+1) viewset 이란?    
+- mixins 와 viewsets를 상속받아서 적용  
+- 함수를 따로 만들지 않아도 get post 등의 함수가 구현되어 있음
+- Mixins 란 : 특정한 클래스에 상속을 통해 기능을 추가하는 것.  
+class PostViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):  
+    serializer_class = PostSerializer  
+    queryset = Post.objects.all()  
+    
+2) FilterSet 이란?   
+> filtering 작업( queryset에서 특정 queryset을 고르는 작업 ) 을 손쉽게 사용하도록 DRF(Django REST Framework)에서 제공하는 속성.  
+클라이언트가 접근하는 API url에 붙은 query parameter을 자동으로 필터의 옵션으로 인식하고 필터링을 함.  
+>
+FilterSet 사용 방법  
 
-그리고 저번에도 띄어쓰기를 해서 인식이 안되는 문제가 있었고 이번에도 enter가 아스키 코드로 해석돼서 안되는 문제가 있었다. 형식 실수를 하면 안되겠구나 하는 걸 뼈저리게 느꼈다 ㅎ 그리고 postman도 파이참 터미널을 보고 에러를 잡아낼 수 있다는 것을 알게 되었다.
+- class Meta :  
+    - filterable한 모델 정의  
+    - 사용할 필드 정의  
+    - Disable fields : exclude  
+    - Ordering : order_by  
+    - Group fields : together 
+    
+import django_filters  
+
+class PostFilter(django_filters.FilterSet):  
+    class Meta:  
+        model = Post  
+        fields = ['author', 'content', 'upload_date']  
+        order_by = ['upload_date']  
+
+## 회고
+하면 할 수록 백엔드 flow에 대한 이해도가 높아지는 것 같아서 뿌듯하다. 그리고 회고 쓰는 skill도 향상된 것 같다. 좀 더 가독성있게 쓸 수 있게 되었다.  
+
+그리고 저번에도 띄어쓰기를 해서 인식이 안되는 문제가 있었고 이번에도 enter가 아스키 코드로 해석돼서 안되는 문제가 있었다. 형식 실수를 하면 안되겠구나 하는 걸 뼈저리게 느꼈다 ㅎ 그리고 postman도 파이참 터미널을 보고 에러를 잡아낼 수 있다는 것을 알게 되었다.  
 
 
 
