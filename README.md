@@ -226,9 +226,9 @@ class Login(APIView):
         else:
             return HttpResponse("target failed")
 	    
-*models.py
+*models.py  	
    class User(AbstractBaseUser, PermissionsMixin):
-        objects = UserManager()
+        objects = UserManager()  
         id = models.CharField(primary_key=True, max_length=17, verbose_name="id", unique=True)
         username = models.CharField(max_length=17, verbose_name="아이디", unique=True)
         nickname = models.CharField(max_length=100, verbose_name="이름", null=True)
