@@ -164,6 +164,47 @@ Simple JWT는 JWT를 구현하기 위한 파이썬 라이브러리 중 하나입
 [https://chagokx2.tistory.com/49](https://chagokx2.tistory.com/49)  
 
 ##구현
+*serializers.py
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
+from .models import User
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+#User = get_user_model()
+fields = '__all__'
+class RefreshToken(RefreshToken):
+    def for_user(cls, user):
+        token = super().for_user(user)
+        return token
+
+class LoginSerializer(serializers.Serializer):
+ id = serializers.CharField(write_only=True, required=True)
+ password = serializers.CharField(write_only=True, required=True)
+
+ def validate(self, request, username=None):
+     id = request.get('id', None)
+     password = request.get('password', None)
+
+     if User.objects.filter(username=id).exists():
+         user = User.objects.get(username=id)
+        if not user.check_password(password):
+             raise serializers.ValidationError({"Wrong Password"})
+        else:
+         raise serializers.ValidationError({"User doesn't exist."})
+
+     token = RefreshToken().for_user(user)
+     refresh = str(token)
+     access = str(token.access_token)
+
+     data = {
+         'id': user.id,
+         'id': user.username,
+         'refresh': refresh,
+         'access': access
+     }
+     
+*views.py     
 class Login(APIView):
 
     def post(self, request):
@@ -184,6 +225,22 @@ class Login(APIView):
             return res
         else:
             return HttpResponse("target failed")
+	    
+*models.py
+   class User(AbstractBaseUser, PermissionsMixin):
+        objects = UserManager()
+        id = models.CharField(primary_key=True, max_length=17, verbose_name="id", unique=True)
+        username = models.CharField(max_length=17, verbose_name="아이디", unique=True)
+        nickname = models.CharField(max_length=100, verbose_name="이름", null=True)
+        date_joined = models.DateTimeField(auto_now_add=True, verbose_name='가입일', null=True, blank=True)
+        is_active = models.BooleanField(default=True)
+        is_staff = models.BooleanField(default=False)
+        is_superuser = models.BooleanField(default=False)
+        USERNAME_FIELD = 'username'
+        REQUIRED_FIELDS = []
+        def __str__(self):
+            return self.username 
+	    
         
 ## 결과
 1) SUCCESS   
