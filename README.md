@@ -246,14 +246,13 @@ class Login(APIView):
 1) SUCCESS   
 
 2) ERROR : ID가 존재하지 않을 때
+![image](https://user-images.githubusercontent.com/90204371/236530836-6a7d5183-47cd-4313-8baf-f845de91d087.png)
  
 
 ## 오류 해결
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e1225ab8-d25f-430c-b886-9b7f34739db7/Untitled.png)  
 계속 404 Not Found 오류가 뜨는 것이었다. 403 Forbidden도 떴었다.  
 그 이유는  
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a753d7d4-2f47-4d4c-866d-68f0e4f2bd68/Untitled.png)  
 url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서 그런 것이었다.
 
 <배운 점>  
