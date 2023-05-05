@@ -246,13 +246,9 @@ class Login(APIView):
 1) SUCCESS   
 
 2) ERROR : ID가 존재하지 않을 때
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2d251113-9121-49cd-9650-321a01a80b8d/Untitled.png)  
+ 
 
 ## 오류 해결
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/82f1c65f-72ae-4de5-81e9-2c0d03c40391/Untitled.png)  
-회원의 정보가 없어서 target failed 라는 메세지가 뜨긴 했지만  
-어쨌튼 200 OK 가 떴다. 하지만 이 과정에서 오류가 떠서 밤을 새게 되는데..  
-
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e1225ab8-d25f-430c-b886-9b7f34739db7/Untitled.png)  
 계속 404 Not Found 오류가 뜨는 것이었다. 403 Forbidden도 떴었다.  
 그 이유는  
