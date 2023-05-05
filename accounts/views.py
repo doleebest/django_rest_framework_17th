@@ -178,7 +178,7 @@ class AuthView(APIView):
          id = serializer.validated_data['id']
          access = serializer.validated_data['access']
          refresh = serializer.validated_data['refresh']
-         # data = serializer.validated_data
+         #data = serializer.validated_data
          res = Response(
              {
                  "message": "로그인되었습니다.",
