@@ -226,20 +226,25 @@ class Login(APIView):
         else:
             return HttpResponse("target failed")
 	    
-*models.py  	
-   class User(AbstractBaseUser, PermissionsMixin):
-        objects = UserManager()  
-        id = models.CharField(primary_key=True, max_length=17, verbose_name="id", unique=True)
-        username = models.CharField(max_length=17, verbose_name="아이디", unique=True)
-        nickname = models.CharField(max_length=100, verbose_name="이름", null=True)
-        date_joined = models.DateTimeField(auto_now_add=True, verbose_name='가입일', null=True, blank=True)
-        is_active = models.BooleanField(default=True)
-        is_staff = models.BooleanField(default=False)
-        is_superuser = models.BooleanField(default=False)
-        USERNAME_FIELD = 'username'
-        REQUIRED_FIELDS = []
-        def __str__(self):
-            return self.username 
+     # models.py
+  class User(AbstractBaseUser, PermissionsMixin):
+      objects = UserManager()
+
+      id = models.CharField(primary_key=True, max_length=17, verbose_name="id", unique=True)
+      username = models.CharField(max_length=17, verbose_name="아이디", unique=True)
+      nickname = models.CharField(max_length=100, verbose_name="이름", null=True)
+      date_joined = models.DateTimeField(auto_now_add=True, verbose_name='가입일', null=True, blank=True)
+
+      is_active = models.BooleanField(default=True)
+      is_staff = models.BooleanField(default=False)
+      is_superuser = models.BooleanField(default=False)
+
+      USERNAME_FIELD = 'username'
+      REQUIRED_FIELDS = []
+
+
+      def __str__(self):
+          return self.username 
 	    
         
 ## 결과
@@ -254,6 +259,9 @@ class Login(APIView):
 계속 404 Not Found 오류가 뜨는 것이었다. 403 Forbidden도 떴었다.  
 그 이유는  
 url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서 그런 것이었다.
+	
+또한 mysql로 수동으로 데이터값을 넣어준 이후에도 계속 bad request가 떴었는데
+++
 
 <배운 점>  
 - CBV 적는 방법 : views.Login.as_view()  
