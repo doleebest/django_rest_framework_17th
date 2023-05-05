@@ -1,4 +1,7 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from .models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -145,8 +148,28 @@ def login(request):
 def home(request):
     user_id = request.session.get('user')
     if user_id:
-        user = User.objects.get(pk = user_id)
+        user = User.objects.get(pk=user_id)
         return HttpResponse("Hello! %s님" % user)
     else:
         return HttpResponse("로그인 해주세요!")
 
+class Login(APIView):
+
+    def post(self, request):
+        user = authenticate(username=request.data.get("username"), password=request.data.get("password"))
+
+        if user is not None:
+            token = TokenObtainPairSerializer.get_token(user)
+            access_token = token.access_token
+            res = Response(
+                {
+                    "message": "login success",
+                    "token": str(token.access_token)
+                },
+                status=status.HTTP_200_OK,
+            )
+
+            res.set_cookie("access", access_token, httponly=True)
+            return res
+        else:
+            return HttpResponse("target failed")
