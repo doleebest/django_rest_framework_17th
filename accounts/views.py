@@ -16,9 +16,6 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.response import Response
 
 
-
-
-
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
@@ -174,7 +171,7 @@ class AuthView(APIView):
  def post(self, request, username=None):
      serializer = self.serializer_class(data=request.data)
 
-     if serializer.is_valid(raise_exception=False):
+     if serializer.is_valid(raise_exception=True):
          id = serializer.validated_data['id']
          access = serializer.validated_data['access']
          refresh = serializer.validated_data['refresh']
@@ -190,4 +187,5 @@ class AuthView(APIView):
          )
          return res
 
-     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+     print(serializer.validated_data['id'])
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

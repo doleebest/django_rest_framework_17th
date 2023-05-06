@@ -29,8 +29,11 @@ class LoginSerializer(serializers.Serializer):
 
      if User.objects.filter(username=id).exists():
          user = User.objects.get(username=id)
-         if not user.check_password(password):
+
+         if user.password != password:
              raise serializers.ValidationError({"Wrong Password"})
+         # if not user.check_password(password):
+         #     raise serializers.ValidationError({"Wrong Password"})
      else:
          raise serializers.ValidationError({"User doesn't exist."})
 
@@ -39,7 +42,7 @@ class LoginSerializer(serializers.Serializer):
      access = str(token.access_token)
 
      data = {
-         'id': user.username,
+         'id': user.id,
          'refresh': refresh,
          'access': access
      }
