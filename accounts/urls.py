@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import register, login, logout, UserViewSet, AuthView
+from .views import register, login, logout, UserViewSet, AuthView, RegisterAPIView
 from . import views
 from rest_framework import routers
 
@@ -14,4 +14,5 @@ urlpatterns = [
     # path('api/<int:pk>/', views.UserDetail.as_view()),
     # path('api/', include(router.urls)),
     path("auth/", AuthView.as_view()),
+    path("register/", RegisterAPIView.as_view())
 ]
