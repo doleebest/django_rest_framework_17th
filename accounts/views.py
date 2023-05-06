@@ -116,7 +116,6 @@ def register(request, useremail=None):
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        # is_valid : forms.py의 유효성 검사를 모두 거쳐야지 다음의 조건을 수행하도록 해준다는 함수
         if form.is_valid():
             request.session['user'] = form.user_id
             return redirect('/')
@@ -187,5 +186,4 @@ class AuthView(APIView):
          )
          return res
 
-     print(serializer.validated_data['id'])
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
