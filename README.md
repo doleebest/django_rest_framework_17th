@@ -260,8 +260,10 @@ class Login(APIView):
 그 이유는  
 url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서 그런 것이었다.
 	
-또한 mysql로 수동으로 데이터값을 넣어준 이후에도 계속 bad request가 떴었는데
-++
+또한 mysql로 수동으로 데이터값을 넣어준 이후에도 계속 bad request가 떴었는데  
+그 이유는 mysql에서 넣은 데이터와 장고가 문자열 타입이 맞지 않아서였다.
+
+→ register class를 등록해 회원가입을 구현했다.
 
 <배운 점>  
 - CBV 적는 방법 : views.Login.as_view()  
