@@ -1,6 +1,5 @@
 # CEOS 17기 백엔드 스터디
 
-<<<<<<< HEAD
 ## 구현 기능
    : 1) boards : 글쓰기, 클릭한 게시물 보기, 모든 게시물 보기  
      2) accounts : 로그인, 로그아웃, 회원가입  
@@ -50,7 +49,6 @@
  https://thin-pangolin-e02.notion.site/Django-2-0412d38d89ca40e6ace5c91621d5c819
  
  ## 5주차 미션
-=======
 ## 참고 사이트
 https://inma.tistory.com/88
 
@@ -127,7 +125,6 @@ class PostFilter(django_filters.FilterSet):
 그리고 저번에도 띄어쓰기를 해서 인식이 안되는 문제가 있었고 이번에도 enter가 아스키 코드로 해석돼서 안되는 문제가 있었다. 형식 실수를 하면 안되겠구나 하는 걸 뼈저리게 느꼈다 ㅎ 그리고 postman도 파이참 터미널을 보고 에러를 잡아낼 수 있다는 것을 알게 되었다.  
 -----------------------------------------------------------------------------------------------------------------------------
 ## 5주차 미션
->>>>>>> f8df29bc6c21a2ed0d53c626be7e9d139865d48f
 ## 노션 링크
 https://www.notion.so/DRF2-Simple-JWT-Permission-1859a7fc0ae54905ac86558d06403755?pvs=4
 
@@ -300,11 +297,9 @@ class Login(APIView):
 	    
         
 ## 결과
-1) SUCCESS   
-<<<<<<< HEAD
+1) SUCCESS
 ![image](https://user-images.githubusercontent.com/90204371/236601208-b5099d3e-6703-4254-a130-1ce0845a627d.png)
-=======
->>>>>>> f8df29bc6c21a2ed0d53c626be7e9d139865d48f
+
 
 2) ERROR : ID가 존재하지 않을 때
 ![image](https://user-images.githubusercontent.com/90204371/236530836-6a7d5183-47cd-4313-8baf-f845de91d087.png)
@@ -315,22 +310,13 @@ class Login(APIView):
 계속 404 Not Found 오류가 뜨는 것이었다. 403 Forbidden도 떴었다.  
 그 이유는  
 url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서 그런 것이었다.
-	
-<<<<<<< HEAD
-또한 mysql로 수동으로 데이터값을 넣어준 이후에도 계속 bad request가 떴었는데
-++
-=======
+
 또한 mysql로 수동으로 데이터값을 넣어준 이후에도 계속 bad request가 떴었는데  
 그 이유는 mysql에서 넣은 데이터와 장고가 문자열 타입이 맞지 않아서였다.
 
 → register class를 등록해 회원가입을 구현했다.
->>>>>>> f8df29bc6c21a2ed0d53c626be7e9d139865d48f
 
 <배운 점>  
 - CBV 적는 방법 : views.Login.as_view()  
 - path를 적어주어야 함수를 사용할 수 있다. 빼먹지 말자.  
-    - 대소문자 주의!  
-<<<<<<< HEAD
-
-=======
->>>>>>> f8df29bc6c21a2ed0d53c626be7e9d139865d48f
+    - 대소문자 주의!
