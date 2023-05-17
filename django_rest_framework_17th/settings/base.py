@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'timetables',
     'tag',
     'rest_framework',
-    'accounts.apps.MemberConfig',
+    #'accounts.apps.MemberConfig',
     'rest_framework_simplejwt',
 ]
 
@@ -62,6 +62,12 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {'charset': 'utf8mb4'},
+    }
+
 }
 
 
@@ -170,4 +176,11 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+DATABASES = {
+    'default': {
+        'ENGINE':'django.db.backends.mysql',
+        'OPTIONS': {'charset': 'utf8mb4'},
+    }
 }
