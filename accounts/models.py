@@ -34,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     id = models.CharField(max_length=64, primary_key=True, verbose_name="id", unique=True)
 
-    username = models.CharField(max_length=17, verbose_name="아이디", unique=True)
+    #username = models.CharField(max_length=17, verbose_name="아이디", unique=True)
     nickname = models.CharField(max_length=100, verbose_name="이름", null=True)
     date_joined = models.DateTimeField(auto_now_add=True, verbose_name='가입일', null=True, blank=True)
 
