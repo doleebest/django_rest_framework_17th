@@ -22,7 +22,7 @@ services:
     container_name: web
     #작성
     build: .
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
     environment:
       MYSQL_ROOT_PASSWORD: mysql
       DATABASE_NAME: mysql
