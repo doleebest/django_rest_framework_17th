@@ -401,6 +401,7 @@ HTTPS 설정 후, 테스트 API 만들어서 Postman을 통해 배포된 EC2 DNS
 ![Untitled (23)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/1a02dfd4-23dc-4b8a-b956-96ca1400606a)
 ango_rest_framework_17th/assets/90204371/5994542d-b752-4625-a0f3-7b0eb2410e07)
 
+
 	
 ## 질문)
 ALB가 아닌 instance를 사용했던데, 왜 target group 이름은 ceos-ALB-targetgroup인지?  
