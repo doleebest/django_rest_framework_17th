@@ -401,6 +401,84 @@ HTTPS 설정 후, 테스트 API 만들어서 Postman을 통해 배포된 EC2 DNS
 ![Untitled (23)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/1a02dfd4-23dc-4b8a-b956-96ca1400606a)
 ango_rest_framework_17th/assets/90204371/5994542d-b752-4625-a0f3-7b0eb2410e07)
 
+(myenv) C:\Users\이소정>pip install django
+Collecting django
+  Using cached Django-4.2.1-py3-none-any.whl (8.0 MB)
+Collecting asgiref<4,>=3.6.0
+  Using cached asgiref-3.6.0-py3-none-any.whl (23 kB)
+Collecting tzdata; sys_platform == "win32"
+  Using cached tzdata-2023.3-py2.py3-none-any.whl (341 kB)
+Collecting sqlparse>=0.3.1
+  Using cached sqlparse-0.4.4-py3-none-any.whl (41 kB)
+Installing collected packages: asgiref, tzdata, sqlparse, django
+Successfully installed asgiref-3.6.0 django-4.2.1 sqlparse-0.4.4 tzdata-2023.3
+WARNING: You are using pip version 20.2.3; however, version 23.1.2 is available.
+You should consider upgrading via the 'c:\users\이소정\myenv\scripts\python.exe -m pip install --upgrade pip' command.
+
+(myenv) C:\Users\이소정>pip install --upgrade pip
+Collecting pip
+  Using cached pip-23.1.2-py3-none-any.whl (2.1 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 20.2.3
+    Uninstalling pip-20.2.3:
+      Successfully uninstalled pip-20.2.3
+ERROR: Could not install packages due to an EnvironmentError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\이소정\\AppData\\Local\\Temp\\pip-uninstall-z74mi9zt\\pip.exe'
+Consider using the `--user` option or check the permissions.
+
+
+(myenv) C:\Users\이소정>django-admin startproject myproject
+
+(myenv) C:\Users\이소정>cd myproject
+
+(myenv) C:\Users\이소정\myproject>python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+Run 'python manage.py migrate' to apply them.
+May 20, 2023 - 22:34:08
+Django version 4.2.1, using settings 'myproject.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+[20/May/2023 22:34:21] "GET / HTTP/1.1" 200 10731
+[20/May/2023 22:34:22] "GET /static/admin/css/fonts.css HTTP/1.1" 404 1816
+Not Found: /favicon.ico
+[20/May/2023 22:34:22] "GET /favicon.ico HTTP/1.1" 404 2113
+
+
+
+Microsoft Windows [Version 10.0.19045.2965]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\이소정>pip install django djangorestframework
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: django in c:\users\이소정\appdata\roaming\python\python39\site-packages (3.2.16)
+Requirement already satisfied: djangorestframework in c:\users\이소정\appdata\roaming\python\python39\site-packages (3.14.0)
+Requirement already satisfied: asgiref<4,>=3.3.2 in c:\users\이소정\appdata\roaming\python\python39\site-packages (from django) (3.6.0)
+Requirement already satisfied: pytz in c:\users\이소정\appdata\roaming\python\python39\site-packages (from django) (2021.1)
+Requirement already satisfied: sqlparse>=0.2.2 in c:\users\ 이소정\appdata\roaming\python\python39\site-packages (from django) (0.4.3)
+
+도커 없이..
+C:\Users\이소정>cd myproject
+
+C:\Users\이소정\myproject>python manage.py startapp myapp
+
+C:\Users\이소정\myproject>python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+Run 'python manage.py migrate' to apply them.
+May 20, 2023 - 23:12:18
+Django version 3.2.16, using settings 'myproject.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
 
 	
 ## 질문)
