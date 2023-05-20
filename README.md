@@ -376,7 +376,6 @@ https://www.youtube.com/watch?v=gK7xnCqCucY
 ![Untitled (17)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/f24db30a-64d3-4c0a-8f28-98f58e509b92)
 
 리스너를 등록하고, 해당 포트로 들어오는 요청을 타겟그룹으로 넘겨주게 된다. 이전에 만들어둔 타겟 그룹을 사용하면 된다.  
-![Untitled (19)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/dcdb1bcf-33b6-4dc9-a368-5a539029ea7d)
 	
 $4️⃣ 80번 포트로 들어오는 요청은 Redirect, 443번 포트로 들어오는 요청을 인스턴스로 연결해준다.  
 리디렉션 대상을 재설정해주었다.
