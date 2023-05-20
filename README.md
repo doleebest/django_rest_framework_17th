@@ -324,9 +324,14 @@ url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서
 ###6주차 과제
 # AWS : https 인증  
 
-저번 과제와 관련이 없는 줄 알았지만 ec2에서 탄력적 ip를 할당해야해서 아니었다. 그래서 5주차 과제를 참고하여 탄력적 ip를 할당해보자.  
+저번 과제와 관련이 없는 줄 알았지만 ec2에서 탄력적 ip를 할당해야해서 아니었다. 그래서 5주차 과제를 참고하여 탄력적 ip를 할당해보자.    
 
-1) 인스턴스 생성  
+1) 인스턴스 생성     
+![Untitled (10)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/a64eddef-0b0f-4d89-aa94-c228ec773d92)  
+![Untitled (11)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/6d5252ae-1198-4ce9-a02d-173eb80401f6)  
+![Untitled (12)](https://github.com/doleebest/dj  
+![Untitled (13)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/7ab7867b-dea4-4fc3-9389-e1085096a039)
+![Untitled (14)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/c56dc858-4b87-4bb5-8960-06314b3d2f93)
 
 2) 이렇게 생성한 퍼블릭 ip 주소를 입력해주었다.   
 
@@ -335,6 +340,8 @@ url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서
 가비아에서 도메인을 구매한 후 아래 링크를 참고했다.
 	https://developer-ping9.tistory.com/320
 가비아 설정을 다 했다.  
+![Untitled (15)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/00e6ecf6-1930-440e-bd81-4dfdfbc67f0e)
+ae89a3e9a138)
 
 # **2️⃣ AWS의 Certificate Manager에서 원하는 도메인에 대한 SSL 인증서를 받는다.**  
 
