@@ -345,13 +345,9 @@ ae89a3e9a138)
 	![Untitled (13)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/7ab7867b-dea4-4fc3-9389-e1085096a039)
 ![Untitled (14)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/c56dc858-4b87-4bb5-8960-06314b3d2f93)
 ![Untitled (15)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/00e6ecf6-1930-440e-bd81-4dfdfbc67f0e)
-![Untitled (16)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/3d351a59-dd99-4899-9cb7-4bf5d150f7bb)
-
 
 # **2️⃣ AWS의 Certificate Manager에서 원하는 도메인에 대한 SSL 인증서를 받는다.**  
-![Untitled (17)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/f24db30a-64d3-4c0a-8f28-98f58e509b92)
-
- 
+![Untitled (16)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/3d351a59-dd99-4899-9cb7-4bf5d150f7bb)
 에러 ) 계속해서 인증서가 발급이 안돼서.. 밤을 샜는데 가비아 홈페이지에 있는 “aws certification manager에 있는 주소”를 복붙해서 네임서버 주소에 넣었어야하는데 그렇지 않아서 발급이 안되는 것이었다.  
 
 다행히 발급이 되었다..  
@@ -377,7 +373,7 @@ https://www.youtube.com/watch?v=gK7xnCqCucY
 - ALB는 Path-based routiong (경로 라우팅)을 지원하여 ALB에 연결된 인스턴스들은 여러개의 URL과 path를 가질 수 있다.  
 
 쭉쭉 설정을 하고 가장 중요한 부분은 **Listeners and routing !**  
-![Untitled (18)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/1525c4d6-a1de-4606-a460-6ec3d7bf3936)
+![Untitled (17)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/f24db30a-64d3-4c0a-8f28-98f58e509b92)
 
 리스너를 등록하고, 해당 포트로 들어오는 요청을 타겟그룹으로 넘겨주게 된다. 이전에 만들어둔 타겟 그룹을 사용하면 된다.  
 ![Untitled (19)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/dcdb1bcf-33b6-4dc9-a368-5a539029ea7d)
