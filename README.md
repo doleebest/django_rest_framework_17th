@@ -320,3 +320,67 @@ url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서
 - CBV 적는 방법 : views.Login.as_view()  
 - path를 적어주어야 함수를 사용할 수 있다. 빼먹지 말자.  
     - 대소문자 주의!
+
+###6주차 과제
+# AWS : https 인증  
+
+저번 과제와 관련이 없는 줄 알았지만 ec2에서 탄력적 ip를 할당해야해서 아니었다. 그래서 5주차 과제를 참고하여 탄력적 ip를 할당해보자.  
+
+1) 인스턴스 생성  
+
+2) 이렇게 생성한 퍼블릭 ip 주소를 입력해주었다.   
+
+#**1️⃣ AWS의 Route 53에서 원하는 도메인을 구입한다.**  
+
+가비아에서 도메인을 구매한 후 아래 링크를 참고했다.
+	https://developer-ping9.tistory.com/320
+가비아 설정을 다 했다.  
+
+# **2️⃣ AWS의 Certificate Manager에서 원하는 도메인에 대한 SSL 인증서를 받는다.**  
+
+에러 ) 계속해서 인증서가 발급이 안돼서.. 밤을 샜는데 가비아 홈페이지에 있는 “aws certification manager에 있는 주소”를 복붙해서 네임서버 주소에 넣었어야하는데 그렇지 않아서 발급이 안되는 것이었다.  
+
+다행히 발급이 되었다..  
+https://www.youtube.com/watch?v=gK7xnCqCucY  
+
+# **3️⃣ 서버로 사용할 Ec2 인스턴스에 대해서 Elastic Load Balancer(로드밸런서)를 등록한다.**  
+
+~~노션 설명을 보니 ALB를 쓴 것 같아서 ALB로 설정하고 그것이 뭔지 더 조사해보았다.~~ 아닌 것 같다 ㅋ  
+### Application Load Balancer (ALB)  
+
+- 7계층, 즉 HTTP 전용 로드 밸런서로 머신 간 다수 HTTP 어플리케이션의 라우팅에 사용된다.  
+    
+    그래서 HTTP/HTTPS 트래픽을 처리하는 로드밸런싱에 최적화 되어 있다.  
+    
+- 이러한 머신들은 대상 그룹이라는 그룹으로 묶이게 됨.  
+    
+    동일 EC2 인스턴스 상의 여러 Applicaion에 부하를 분산하고 컨테이너와 ECS를 사용하게 된다.  
+    
+- HTTP/2와 WebSocket을 지원하며 Redirect도 지원하므로,  
+    
+    HTTP에서 HTTPS로 트래픽을 자동 Redirect하려는 경우, 로드 밸런서 레벨에서 가능하다는 의미가 됨. 그러므로 기존의 CLB 보다 많은 장점을 포함하고 있다.  
+    
+- ALB는 Path-based routiong (경로 라우팅)을 지원하여 ALB에 연결된 인스턴스들은 여러개의 URL과 path를 가질 수 있다.  
+
+쭉쭉 설정을 하고 가장 중요한 부분은 **Listeners and routing !**  
+리스너를 등록하고, 해당 포트로 들어오는 요청을 타겟그룹으로 넘겨주게 된다. 이전에 만들어둔 타겟 그룹을 사용하면 된다.  
+	
+$4️⃣ 80번 포트로 들어오는 요청은 Redirect, 443번 포트로 들어오는 요청을 인스턴스로 연결해준다.  
+리디렉션 대상을 재설정해주었다.
+nginx 리다이렉션 로직 추가 (선택적)
+
+```bash
+if ($http_x_forwarded_proto != 'https') {
+return 301 https://$host$request_uri;
+}
+```
+	
+#5️⃣ 등록한 로드밸런서를 AWS Route 53의 도메인의 레코드에 등록한다.  
+#6️⃣ ec2 인바운드 규칙 443 추가  
+https://dbjh.tistory.com/65
+
+HTTPS 설정 후, 테스트 API 만들어서 Postman을 통해 배포된 EC2 DNS 주소로 요청해보기    
+
+	
+## 질문)
+ALB가 아닌 instance를 사용했던데, 왜 target group 이름은 ceos-ALB-targetgroup인지?
