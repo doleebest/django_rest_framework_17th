@@ -342,9 +342,16 @@ url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서
 가비아 설정을 다 했다.  
 ![Untitled (15)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/00e6ecf6-1930-440e-bd81-4dfdfbc67f0e)
 ae89a3e9a138)
+	![Untitled (13)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/7ab7867b-dea4-4fc3-9389-e1085096a039)
+![Untitled (14)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/c56dc858-4b87-4bb5-8960-06314b3d2f93)
+![Untitled (15)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/00e6ecf6-1930-440e-bd81-4dfdfbc67f0e)
+![Untitled (16)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/3d351a59-dd99-4899-9cb7-4bf5d150f7bb)
+
 
 # **2️⃣ AWS의 Certificate Manager에서 원하는 도메인에 대한 SSL 인증서를 받는다.**  
+![Untitled (17)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/f24db30a-64d3-4c0a-8f28-98f58e509b92)
 
+ 
 에러 ) 계속해서 인증서가 발급이 안돼서.. 밤을 샜는데 가비아 홈페이지에 있는 “aws certification manager에 있는 주소”를 복붙해서 네임서버 주소에 넣었어야하는데 그렇지 않아서 발급이 안되는 것이었다.  
 
 다행히 발급이 되었다..  
@@ -352,7 +359,7 @@ https://www.youtube.com/watch?v=gK7xnCqCucY
 
 # **3️⃣ 서버로 사용할 Ec2 인스턴스에 대해서 Elastic Load Balancer(로드밸런서)를 등록한다.**  
 
-~~노션 설명을 보니 ALB를 쓴 것 같아서 ALB로 설정하고 그것이 뭔지 더 조사해보았다.~~ 아닌 것 같다 ㅋ  
+~~노션 설명을 보니 ALB를 쓴 것 같아서 ALB로 설정하고 그것이 뭔지 더 조사해보았다.~~ 아닌 것 같다 ㅋ  그럼 왜 이름이 ALB인거지
 ### Application Load Balancer (ALB)  
 
 - 7계층, 즉 HTTP 전용 로드 밸런서로 머신 간 다수 HTTP 어플리케이션의 라우팅에 사용된다.  
@@ -370,10 +377,15 @@ https://www.youtube.com/watch?v=gK7xnCqCucY
 - ALB는 Path-based routiong (경로 라우팅)을 지원하여 ALB에 연결된 인스턴스들은 여러개의 URL과 path를 가질 수 있다.  
 
 쭉쭉 설정을 하고 가장 중요한 부분은 **Listeners and routing !**  
+![Untitled (18)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/1525c4d6-a1de-4606-a460-6ec3d7bf3936)
+
 리스너를 등록하고, 해당 포트로 들어오는 요청을 타겟그룹으로 넘겨주게 된다. 이전에 만들어둔 타겟 그룹을 사용하면 된다.  
+![Untitled (19)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/dcdb1bcf-33b6-4dc9-a368-5a539029ea7d)
 	
 $4️⃣ 80번 포트로 들어오는 요청은 Redirect, 443번 포트로 들어오는 요청을 인스턴스로 연결해준다.  
 리디렉션 대상을 재설정해주었다.
+![Untitled (20)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/7de03dae-819d-4a50-a8b9-a56a3c0b6672)
+
 nginx 리다이렉션 로직 추가 (선택적)
 
 ```bash
@@ -383,6 +395,9 @@ return 301 https://$host$request_uri;
 ```
 	
 #5️⃣ 등록한 로드밸런서를 AWS Route 53의 도메인의 레코드에 등록한다.  
+![Untitled (21)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/edb1a2c0-2948-44e3-8c65-ae89a3e9a138)
+
+
 #6️⃣ ec2 인바운드 규칙 443 추가  
 https://dbjh.tistory.com/65
 
