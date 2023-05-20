@@ -397,7 +397,14 @@ return 301 https://$host$request_uri;
 https://dbjh.tistory.com/65
 
 HTTPS 설정 후, 테스트 API 만들어서 Postman을 통해 배포된 EC2 DNS 주소로 요청해보기    
+![Untitled (22)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/3f705508-b7dc-416b-865c-827bcd9a7150)
+![Untitled (23)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/1a02dfd4-23dc-4b8a-b956-96ca1400606a)
+ango_rest_framework_17th/assets/90204371/5994542d-b752-4625-a0f3-7b0eb2410e07)
 
 	
 ## 질문)
-ALB가 아닌 instance를 사용했던데, 왜 target group 이름은 ceos-ALB-targetgroup인지?
+ALB가 아닌 instance를 사용했던데, 왜 target group 이름은 ceos-ALB-targetgroup인지?  
+## 회고)
+중간에 인증서 발급이 안되어서 애먹고 밤을 쌩으로 샜지만..  
+그래도 평소에 내가 매일매일 쓰는 http 주소의 작동원리를 알고  
+배포된 주소를 요청해볼 수 있어서 의미있었다.
