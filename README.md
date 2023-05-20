@@ -401,6 +401,8 @@ HTTPS 설정 후, 테스트 API 만들어서 Postman을 통해 배포된 EC2 DNS
 ![Untitled (23)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/1a02dfd4-23dc-4b8a-b956-96ca1400606a)
 ango_rest_framework_17th/assets/90204371/5994542d-b752-4625-a0f3-7b0eb2410e07)
 
+	
+'''
 (myenv) C:\Users\이소정>pip install django
 Collecting django
   Using cached Django-4.2.1-py3-none-any.whl (8.0 MB)
@@ -462,7 +464,7 @@ Requirement already satisfied: asgiref<4,>=3.3.2 in c:\users\이소정\appdata\r
 Requirement already satisfied: pytz in c:\users\이소정\appdata\roaming\python\python39\site-packages (from django) (2021.1)
 Requirement already satisfied: sqlparse>=0.2.2 in c:\users\ 이소정\appdata\roaming\python\python39\site-packages (from django) (0.4.3)
 
-도커 없이..
+
 C:\Users\이소정>cd myproject
 
 C:\Users\이소정\myproject>python manage.py startapp myapp
@@ -479,6 +481,7 @@ May 20, 2023 - 23:12:18
 Django version 3.2.16, using settings 'myproject.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
+'''
 
 	
 ## 질문)
