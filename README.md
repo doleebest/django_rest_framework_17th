@@ -407,4 +407,5 @@ ALB가 아닌 instance를 사용했던데, 왜 target group 이름은 ceos-ALB-t
 ## 회고)
 중간에 인증서 발급이 안되어서 애먹고 밤을 쌩으로 샜지만..  
 그래도 평소에 내가 매일매일 쓰는 http 주소의 작동원리를 알고  
-배포된 주소를 요청해볼 수 있어서 의미있었다.
+배포된 주소를 요청해볼 수 있어서 의미있었다.  
+https://purring-backbone-cc0.notion.site/AWS-https-790fd3e2e893413494c4280daf774d65
