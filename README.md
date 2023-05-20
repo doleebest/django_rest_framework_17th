@@ -483,7 +483,8 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 '''
 ![Untitled (25)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/f5a07bf4-b12b-4f13-8b21-e7900e00c092)
-	![image](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/d8ec9169-cd3a-4470-9719-f3232d994c47)
+	![image](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/f116b298-2a13-4a87-ab7d-729aef288903)
+
 	
 ## 질문)
 ALB가 아닌 instance를 사용했던데, 왜 target group 이름은 ceos-ALB-targetgroup인지?  
