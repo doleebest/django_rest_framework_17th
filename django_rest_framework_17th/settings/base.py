@@ -22,16 +22,16 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, 'django_rest_framework_17th/.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY=env('DJANGO_SECRET_KEY')
 #DEBUG = env('DEBUG')
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG=True
+ALLOWED_HOSTS=['*']
 
 
 # Application definition

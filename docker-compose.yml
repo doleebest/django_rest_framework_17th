@@ -14,7 +14,7 @@ services:
     ports:
       - "3307:3306"
     env_file:
-        - .env
+        - django_rest_framework_17th/.env
     volumes:
       - dbdata:/var/lib/mysql
 
