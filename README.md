@@ -705,3 +705,4 @@ ALB가 아닌 instance를 사용했던데, 왜 target group 이름은 ceos-ALB-t
 중간에 인증서 발급이 안되어서 애먹고 밤을 쌩으로 샜지만..  
 그래도 평소에 내가 매일매일 쓰는 http 주소의 작동원리를 알 수 있어서 의미있었다.
 https://purring-backbone-cc0.notion.site/AWS-https-790fd3e2e893413494c4280daf774d65
+	https://purring-backbone-cc0.notion.site/EC2-RDS-Docker-Github-Action-af03d5854ec449e08de41f33b45b0cc3
