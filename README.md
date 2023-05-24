@@ -321,17 +321,230 @@ url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서
 - path를 적어주어야 함수를 사용할 수 있다. 빼먹지 말자.  
     - 대소문자 주의!
 
-###6주차 과제
+##==============
+# EC2, RDS & Docker & Github Action
+
+### git conflict error
+
+merge하기 전에 push를 해버려서 conflict 에러가 났다고 한다.
+
+help 브랜치에서 해결해보다가
+
+doleebest에 help 브랜치를 머지한 후 doleebest 브랜치로 PR을 날려서 해결했다.
+
+→ 그런데 이렇게 해결하는게 맞는지 잘 모르겠다. help 브랜치에서 해결했어야 했나..?
+
+### Docker
+
+- 어떤 OS에서도 같은 환경을 만들어 주는 것
+- 가상 컨테이너(가상 시스템) 기술
+- docker는 `Dockerfile`을 실행시켜주고 docker-compose는 `docker-compose.yml` 파일을 실행
+    - `Dockerfile` : 하나의 이미지를 만들기 위한 과정
+        
+        ("*Docker 이미지*"는 Docker를 사용하여 실행 가능한 환경을 구성하기 위해 필요한 모든 소프트웨어 및 구성 요소를 포함하는 가볍고 표준화된 패키지이다. Docker 이미지는 애플리케이션을 실행하는 데 필요한 모든 라이브러리, 의존성 및 구성을 포함하는 "스냅샷"으로 볼 수 있다.)
+FROM python:3.8.3-alpine
+ENV PYTHONUNBUFFERED 1
+
+RUN mkdir /app
+WORKDIR /app
+
+# dependencies for psycopg2-binary
+RUN apk add --no-cache mariadb-connector-c-dev
+RUN apk update && apk add python3 python3-dev mariadb-dev build-base && pip3 install mysqlclient && apk del python3-dev mariadb-dev build-base
+
+# By copying over requirements first, we make sure that Docker will cache
+# our installed requirements rather than reinstall them on every build
+COPY requirements.txt /app/requirements.txt
+RUN pip install -r requirements.txt
+
+# Now copy in our code, and run it
+COPY . /app/
+	
+- `docker-compose.yml` : 그 이미지를 여러개 띄워서 서로 네트워크도 만들어주고 컨테이너의 밖의 호스트와도 어떻게 연결할지, 파일 시스템은 어떻게 공유할지(volumes) 제어
+    - github action에 의해 서버에서 실행(로컬이 아니고)
+	
+version: '3'
+services:
+
+  db:
+    container_name: db
+    image: mysql:5.7 #window
+		image: mariadb:latest #mac
+    restart: always
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: mysql
+    expose:
+      - 3306
+    ports:
+      - "3307:3306"
+    env_file:
+      - .env
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  web:
+    container_name: web
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      DATABASE_NAME: mysql
+      DATABASE_USER: 'root'
+      DATABASE_PASSWORD: mysql
+      DATABASE_PORT: 3306
+      DATABASE_HOST: db
+      DJANGO_SETTINGS_MODULE: django_docker.settings.dev
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+volumes:
+  app:
+  dbdata:
+
+### github action
+
+서버에 접속해서 docker를 실행, master에 푸쉬된 커밋을 복사
+
+### DB 컨테이너는 없음
+
+데이터 손실 및 해킹 위험이 있어서 없음
+
+여기서부터 어마무시하게 에러가 나기 시작했다.
+
+### 에러) ModuleNotFoundError: No module named 'fcntl’
+
+gunicorn을 실행하려고 하는데 안된다.. 위와 같은 에러가 뜬다. 이는 윈도우에서 gunicorn이 동작하지 않을 때 발생하는 에러라고 한다. 다만, 승희가 로컬에서 안돼도 아마 리눅스에서 서버 띄우면 될거야 우선 서버 먼저 띄우고 그때도 안되는지 확인해보자고 해서 일단 PASS.. 
+
+### 에러2) 로컬 환경에서 도커 실행 실패
+
+1. `docker-compose -f docker-compose.yml up --build` 을 실행했는데 rest_framework_simplejwt 가 no module 이라고 떴다. INSTALLED_APPS에 넣었는데도 일주일 째 안된다. 
+2. 해결책 : my.ini 파일에서 형식을 utf8mb4로 수정했다.
+    
+    mysql에서도 마찬가지로 charset 형식을 utf8mb4로 수정했다.
+    
+    그리고 주소를 [http://0.0.0.0:8000/](http://0.0.0.0:8000/) 이 아니라 [http://127.0.0.1:8000/](http://127.0.0.1:8000/) 으로 접속했더니 다음과 같이 실행이 되었다…...
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5182084e-3328-448e-9799-64a255a0ebbf/Untitled.png)
+
+# 실 환경 **배포**
+
+배포 전에 AWS EC2 서버와 RDS db가 필요하며 EC2와 RDS는 모두 **프리티어**로 만들어주었다. 과금의 위험이 매우 높은 위험한 AWS..   
+
+### nginx 설정  
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3e495dea-5531-4823-a301-74befedbb532/Untitled.png)
+
+upstream django_rest_framework_17th {
+  server web:8000;
+}
+
+server {
+
+  listen 80;
+
+  if ($http_x_forwarded_proto != 'https') {
+	return 301 https://$host$request_uri;
+}
+
+  location / {
+    proxy_pass http://django_rest_framework_17th;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_redirect off;
+  }
+
+  location /static/ {
+    alias /home/app/web/static/;
+  }
+
+  location /media/ {
+    alias /home/app/web/media/;
+  }
+}
+	
+### instance 구축과정
+
+여기서부터 오류가 많이 나서.. 몇번을 인스턴스 생성하고 rds 구축했는지 모르겠다. 과정을 거의 외운 것 같다.
+	
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2cfc949a-7c74-4cf5-bfa7-047a070da92c/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/789ab766-f1c5-4991-8c0b-bbe3b562f53d/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/753e00c7-1104-45c2-a5fa-f24ba796ae3a/Untitled.png)
+	
+참고한 레퍼런스들
+[Django 서비스 AWS로 배포하기 - [1] 프로젝트 준비와 AWS 서버 대여](https://nerogarret.tistory.com/45)
+
+rds 구축
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ed155ae4-a5d5-45ca-a52d-a15a81c9c4ec/Untitled.png)
+	
+.env.prod
+
+```python
+DATABASE_HOST=database-1.c81tznyca4ah.ap-northeast-2.rds.amazonaws.com
+DATABASE_DB=mysql
+DATABASE_NAME=database-1
+DATABASE_USER=admin
+DATABASE_PASSWORD=amazonsj0@
+DATABASE_PORT=3306
+DEBUG=False
+DJANGO_ALLOWED_HOSTS=ec2-52-79-194-15.ap-northeast-2.compute.amazonaws.com
+DJANGO_SECRET_KEY=5h@&2!#+=h)s(x&9lp-qhmk_x-#2km--%&u_+s=rb=ftb(-)j_
+```
+
+[https://youtu.be/oGQ1HteFYnQ](https://youtu.be/oGQ1HteFYnQ) → 장고와 ec2 연결해주는 레퍼런스 
+
+pem 키 찾기
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpQIBAAKCAQEAnQcGmnIBYyt+OIHRScfdCj2MR9/7W10GA46PBS1jq43M4+Lw
+IAOItNGIJ4y0nIaGGFshvKyA40On3OabJc1I2GtvJK8+qcNkh0gst017MBv7WoyQ
+jAxIFAKQZ5Gw3Zr4+R026aDZS0GRY+q4ZoayEIUUjd+RtmDXwFSr6ETPKW4KHpE5
+LoUpTlh8vI/JobEgCHF17QxsYdyzkuvS+w+143op7ib3UPYWlMXX8tGuQzWKVc0k
+0nxP1KEHxSgjuYUo5Vhl+u1TMoBKgTJF4gGQ1rxM5HTwwAn3tXpi8s41P27si6RY
+MNU26YkmqguXgfajZhTxkIrZ9XEKpuszzAM6LwIDAQABAoIBAQCHRYspt3Z8gPY+
+JY8u2Q8RCE51iH1Xin5oyAFq+1v2aLSNyG0FlyXIZwy8zVi10qloB/G7QHvTy++q
+u7oByaOsVHitiI4Z3qoWZFWpHwU1P5W7voWzL81T95WAsyBC94Ltz34Dqz4lt3lR
+Mt3h7L0uwAYh5ev3ydty4z4oXEZ+L+LyV1Lvvzyrga9s2OzbDdJ0472itk88dLAo
+gP45qUGNipBW2Y2zRulcWh7Qd8CM1iYSROkm345Z1i2uxVOdOngA0cnVzl+OhE9D
+TxHW9V0HpYaGxNMBi5+KDt/+ECyHaQb5wwWRu8OHnlEv2r4FP98FsbliMB4Xfx/K
+lS7m6K3BAoGBAN9Qx2k9qa5h2uwIS/ZFCy4TQzMc2SqUGIzdTQR94VF76jPWGsxM
+LQd7dtvkmeuPLJgGUDqu1/nEOhObBZCmr1A3h3VpYIC2K0RUsenTdOCIrJ3SKvqJ
+d+mGRNRfPHfkKjEdsq4uABwNgkgJjVseb81kZTbInR/pYAABmy2irfVPAoGBALQC
+jd//NmlgcXRAtUTq51VxvrdfhkmBGTgAvKdFtsXrEuAOBJMuAnUWADGU7a+lnelv
+SuAVNc7+0d5dAbiJ/GyarDsHua376vcFgiU+nREsfYsKIUCyz5d5gP3MDcouh4JE
+/AvjQfrTmkHoSXb/CjFF3gDIqAkxVqvAKmLajvUhAoGBANC8Jsi+NH6lRQZe8vHs
+s3iL1MJP8sWTzCbPLBBIwXVyyAVP2Zigk25s/zqmwSCnoV0weYmAqKvzuP1eZ6M/
+yprGbL1YlDV7EZI7QFl5p8PAvOh/7GBmYklLkcaYhmLiSHXEdqHMqZmPHvnKw/Ap
+0QNBFkJQ3l1XvL4EwlGzv7qNAoGAUTpZ1PswDWsEpyXP5lJtoyPZoJuNWDvWKmxC
+tOSDbln+QXZx4AxB9Z3A5p7ChqEgWcbrraREjKx1/XZQoXo6mrNNBrIcuoLT6zXk
+HXRcofRGjmg6yxwlCsA8UcozasmGQmVoquCY1FuJ3zW3eOfrLILPg+EH2mYWKxhi
+yArBuaECgYEAiYKGh4hn2jwbG4FB9u87Qw5zIKmJXrLXpSca7nXSu66UrSwFQUG7
+IlTow5dN2nWExl/j85oatNtmxFNJB4K1eNQMBG5wFZm9B6kGolkjTam2CdIS8j4o
+4DMHm6VwcLopeqpVAMp0MfH9Qh2W9cABSmmgVEwpWK3JoZrL3qD/vg0=
+-----END RSA PRIVATE KEY-----
+	
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/19523df0-842f-4b95-8024-9af82b0333a5/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/877b6152-bce4-47fd-8f8b-3970cde41314/Untitled.png)
+
+
 # AWS : https 인증  
 
 저번 과제와 관련이 없는 줄 알았지만 ec2에서 탄력적 ip를 할당해야해서 아니었다. 그래서 5주차 과제를 참고하여 탄력적 ip를 할당해보자.    
 
 1) 인스턴스 생성     
-![Untitled (10)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/a64eddef-0b0f-4d89-aa94-c228ec773d92)  
-![Untitled (11)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/6d5252ae-1198-4ce9-a02d-173eb80401f6)  
-![Untitled (12)](https://github.com/doleebest/dj  
-![Untitled (13)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/7ab7867b-dea4-4fc3-9389-e1085096a039)
-![Untitled (14)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/c56dc858-4b87-4bb5-8960-06314b3d2f93)
+![Untitled (10).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/94d20086-8ecf-446b-a4f0-eb094e28acdf/Untitled_(10).png)
+
+![Untitled (11).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/060ce611-4dae-4b68-9f6b-318358f70196/Untitled_(11).png)
+
+![Untitled (12).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c33fb056-7395-4748-b7f0-1d7ebc11aa33/Untitled_(12).png)
+
+![Untitled (13).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2cbfbf05-e859-44d3-8dda-b68226b3a210/Untitled_(13).png)
+
+![Untitled (14).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b8ed598f-b2c0-4d85-95ef-34a12c7be4a9/Untitled_(14).png)
 
 2) 이렇게 생성한 퍼블릭 ip 주소를 입력해주었다.   
 
@@ -344,7 +557,7 @@ url에 로그인 기능을 구현하는 함수의 path를 적어주지 않아서
 ae89a3e9a138)
 	![Untitled (13)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/7ab7867b-dea4-4fc3-9389-e1085096a039)
 ![Untitled (14)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/c56dc858-4b87-4bb5-8960-06314b3d2f93)
-![Untitled (15)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/00e6ecf6-1930-440e-bd81-4dfdfbc67f0e)
+![Untitled (15).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2588464d-a222-460f-86b8-1331249bd7c8/Untitled_(15).png)
 
 # **2️⃣ AWS의 Certificate Manager에서 원하는 도메인에 대한 SSL 인증서를 받는다.**  
 ![Untitled (16)](https://github.com/doleebest/django_rest_framework_17th/assets/90204371/3d351a59-dd99-4899-9cb7-4bf5d150f7bb)
